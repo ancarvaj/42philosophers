@@ -2,7 +2,7 @@ NAME = philo
 CC = cc -Wall -Wextra -Werror
 CFLAGS = -Iincludes/
 SDIR = src/
-SRC = $(SDIR)main.c $(SDIR)err.c $(SDIR)libc_utils.c
+SRC = $(SDIR)main.c $(SDIR)err.c $(SDIR)libc_utils.c $(SDIR)time.c
 OBJS = $(SRC:.c=.o)
 
 .PHONY: all
