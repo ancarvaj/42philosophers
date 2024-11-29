@@ -20,8 +20,9 @@ typedef struct s_rules
 
 typedef struct s_fork
 {
-	size_t	fork_id;
-	bool	locked;
+	size_t		fork_id;
+	bool		locked;
+	pthread_mutex_t	fork[250];
 }	t_fork;
 
 typedef struct s_philo
@@ -30,21 +31,23 @@ typedef struct s_philo
 	bool	dead;
 	bool	philo_ate;
 	size_t	own_fork;
-	size_t	fork_side;
+	size_t	side_fork;
 }	t_philo;
-
-typedef struct s_philo_info
-{
-	size_t number_of_philo_has_eaten;
-	t_rules rules;
-	/*gobal info philo should know*/
-}	t_philo_info;
 
 typedef struct s_time
 {
 	time_t	start_time;
 	time_t	current_time;
 }	t_time;
+
+typedef struct s_philo_info
+{
+	size_t	number_of_philo_has_eaten;
+	t_rules rules;
+	t_time	time;
+	t_philo	philo[255];
+	t_fork	fork[255];
+}	t_table_info;
 
 size_t		ft_strlen(const char *s);
 unsigned int	ft_message_error(const char *err, unsigned int exit_status);
