@@ -21,7 +21,6 @@ typedef struct s_rules
 typedef struct s_fork
 {
 	size_t		fork_id;
-	bool		locked;
 	pthread_mutex_t	fork[250];
 }	t_fork;
 
@@ -38,6 +37,7 @@ typedef struct s_time
 {
 	time_t	start_time;
 	time_t	current_time;
+	size_t	*philo_has_eaten;
 }	t_time;
 
 typedef struct s_philo_info
@@ -45,8 +45,8 @@ typedef struct s_philo_info
 	size_t	number_of_philo_has_eaten;
 	t_rules rules;
 	t_time	time;
-	t_philo	philo[255];
-	t_fork	fork[255];
+	t_philo	philo[250];
+	t_fork	fork[250];
 }	t_table_info;
 
 size_t		ft_strlen(const char *s);
@@ -57,6 +57,6 @@ time_t		ft_timevaltoms(struct timeval tv);
 time_t		ft_get_time(time_t start_time, time_t current_time);
 void		*ft_time_routine(void *global_time);
 int		ft_atoi(const char *s);
-int	ft_check_args(char **av);
+int		ft_check_args(char **av);
 
 #endif
