@@ -17,50 +17,58 @@ int	ft_init_rules(char **argv, t_rules *rules, size_t *nb_of_philos)
 
 void	*ft_philo_routine(void	*p)
 {
-	t_philo_info *info;
-	int	time = 0;
+	t_philo_info	*info;
+	size_t		
+
 	info = (t_philo_info *)p;
 	*(info->ready) = *(info->ready) - 1;
 	while (1)
 	{
-		usleep(100);
 		if (*(info->ready) == 0)
 			break;
+		usleep(100);
 	}
+	if (info->philo_id % 2 == 0)
+		usleep(1000);
 	while (1)
 	{
-		usleep(100000);
-		printf("hello from philo : %ld\n", info->philo_id);
-		time++;
-		if (time == 10)
-		{
-			printf("philo : %ld muerto\n", info->philo_id);
-			*(info->philo_has_eaten) = *(info->philo_has_eaten) - 1;
-			return (NULL);
-		}
+		while (pthread_mutex_lock(&info->fork[info->own_fork]))
+			usleep(1000);
+		printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
+		while (pthread_mutex_lock(&info->fork[info->side_fork]))
+			usleep(1000);
+		printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
+		printf("%ld %ld is eating\n", *(info->current_time), info->philo_id);
+		usleep(info->rules.time_to_eat * 1000);
+		pthread_mutex_unlock(&info->fork[info->own_fork]);
+		pthread_mutex_unlock(&info->fork[info->side_fork]);
+		printf("%ld %ld is sleeping\n", *(info->current_time), info->philo_id);
+		usleep(info->rules.time_to_sleep * 1000);
+		printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);
 	}
+	return (NULL);
 }
 
-int	ft_init_info(t_philo_info *philo, size_t nb_of_philos, t_simulation *sim)
+int	ft_init_info(t_philo_info *info, size_t nb_of_philos, t_simulation *sim)
 {
 	size_t	i;
 
 	i = 0;
-	philo->fork = sim->fork;
+
 	while (i < nb_of_philos)
 	{
-		philo[i].ready = &sim->ready;
-		philo[i].philo_has_eaten = &sim->philo_has_eaten;
-		philo[i].current_time = &sim->time.current_time;
-		philo[i].rules = sim->rules;
-		philo[i].philo_id = i + 1;
-		philo[i].dead = false;
-		philo[i].philo_ate = false;
-		philo[i].own_fork = i + 1;
+		info[i].ready = &sim->ready;
+		info[i].dead = &sim->dead;
+		info[i].philo_has_eaten = &sim->philo_has_eaten;
+		info[i].rules = sim->rules;
+		info[i].fork = sim->fork;
+		info[i].current_time = &sim->time.current_time;
+		info[i].philo_id = i + 1;
+		info[i].philo_ate = false;
 		if (i + 1 == nb_of_philos)
-			philo[i].side_fork = 1;
+			info[i].side_fork = 1;
 		else
-			philo[i].side_fork = i + 2;
+			info[i].side_fork = i + 2;
 		i++;
 	}
 	return (0);
@@ -73,7 +81,7 @@ int	ft_init_philo(pthread_t *philo, t_philo_info *info, size_t nb_of_philo)
 	i = 0;
 	while (i < nb_of_philo)
 	{
-		pthread_create(&philo[i], NULL, ft_philo_routine, (void *)&(info[i]));
+		pthread_create(&philo[i], NULL, ft_philo_routine, (void *)&info[i]);
 		i++;
 	}
 	i = 0;
