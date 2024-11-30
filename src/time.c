@@ -25,6 +25,12 @@ void	*ft_time_routine(void *p)
 	t_time	*time = p;
 	struct timeval tv;
 
+	while (1)
+	{
+		usleep(100);
+		if (*(time->ready) == 0)
+			break;
+	}
 	if (gettimeofday(&tv, NULL))
 		return (NULL);
 	time->start_time = ft_timevaltoms(tv);
