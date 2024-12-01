@@ -59,6 +59,7 @@ void	*ft_philo_routine(void	*p)
 		usleep(50);
 	while (!*(info->dead) && *(info->philo_has_eaten))
 	{
+		last_meal = 
 		if (ft_get_fork(info))//coger tenedores + comer
 			return (NULL);
 		if (ft_eat(info)) // comer + soltar tenedores
