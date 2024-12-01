@@ -15,76 +15,56 @@ int	ft_init_rules(char **argv, t_rules *rules, size_t *nb_of_philos)
 	return (0);
 }
 
+int	ft_calculate_dead()
+{
+	while (1)
+	{
+		return (0);
+	}
+	return (0);
+}
+
+int	ft_sleep(t_philo_info *info)
+{
+	while (1)
+	{
+		return (0);
+	}
+	return (0);
+}
+int	ft_get_fork(t_philo_info *info, time_t last_meal)
+{
+	while (1)
+	{
+		if (pthread_mutex_lock(own_fork) && pthread_mutex_lock(side_fork))
+			return (0);
+		if (ft_calculate_dead(time))
+			return (1);
+		usleep(10);
+	}
+	return (0);
+}
+
 void	*ft_philo_routine(void	*p)
 {
 	t_philo_info	*info;
-	size_t		last_action_time = 0;
-	size_t		current_time = 0;
-	
+	time_t		last_meal;
 	info = (t_philo_info *)p;
 	*(info->ready) = *(info->ready) - 1;
 	while (1)
-	{
 		if (*(info->ready) == 0)
 			break;
-		usleep(10);
-	}
+	last_meal = *(info->current_time);
 	if (info->philo_id % 2 == 0)
 		usleep(50);
-	while (!*(info->dead))
+	while (!*(info->dead) && *(info->philo_has_eaten))
 	{
-
-
-		//FUCK YOU!!!!!
-
-
-
-
-
-
-
-
-
-
-		/*last_action_time = *(info->current_time);
-		while (pthread_mutex_lock(&info->fork[info->own_fork]))
-		{
-			if (info->rules.time_to_die < *(info->current_time) - last_action_time)
-			{
-				printf("%ld %ld is dead1\n", *(info->current_time), info->philo_id);
-				*(info->dead) = true;
-			}
-		}
-		printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
-		while (pthread_mutex_lock(&info->fork[info->side_fork]))
-		{
-			if (info->rules.time_to_die < *(info->current_time) - last_action_time)
-			{
-				printf("%ld %ld is dead2\n", *(info->current_time), info->philo_id);
-				*(info->dead) = true;
-			}
-		}
-		printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
-		printf("%ld %ld is eating\n", *(info->current_time), info->philo_id);
-		usleep(info->rules.time_to_eat * 1000);
-		current_time = *(info->current_time);
-		pthread_mutex_unlock(&info->fork[info->own_fork]);
-		pthread_mutex_unlock(&info->fork[info->side_fork]);
-		if (info->rules.time_to_die < current_time - last_action_time)
-		{
-			printf("%ld %ld is dead3\n", *(info->current_time), info->philo_id);
-			*(info->dead) = true;
-		}
-		last_action_time = current_time;
-		printf("%ld %ld is sleeping\n", *(info->current_time), info->philo_id);
-		usleep(info->rules.time_to_sleep * 1000);
-		current_time = *(info->current_time);
-		if (info->rules.time_to_die < current_time - last_action_time)
-		{
-			printf("%ld %ld is dead4\n", *(info->current_time), info->philo_id);
-			*(info->dead) = true;
-		}
-		printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);*/
+		if (ft_get_fork(info))//coger tenedores + comer
+			return (NULL);
+		if (ft_eat(info)) // comer + soltar tenedores
+			return (NULL);
+		if (ft_sleep(fork))//dormir + pensar
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -106,9 +86,9 @@ int	ft_init_info(t_philo_info *info, size_t nb_of_philos, t_simulation *sim)
 		info[i].philo_id = i + 1;
 		info[i].philo_ate = false;
 		if (i + 1 == nb_of_philos)
-			info[i].side_fork = 1;
+			info[i].side_fork = 0;
 		else
-			info[i].side_fork = i + 2;
+			info[i].side_fork = i;
 		i++;
 	}
 	return (0);
