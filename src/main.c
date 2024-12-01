@@ -1,7 +1,8 @@
 #include "philo.h"
 
-int	ft_init_time(t_time *time, size_t *philo_has_eaten, size_t *ready)
+int	ft_init_time(t_time *time, size_t *philo_has_eaten, size_t *ready, bool *dead)
 {
+	time->dead = dead;
 	time->ready = ready;
 	time->philo_has_eaten = philo_has_eaten;
 	return (0);
@@ -17,7 +18,7 @@ int	ft_init_sim(t_simulation *sim, char **av)
 	sim->philo_has_eaten = sim->nb_of_philos;
 	sim->ready = sim->nb_of_philos;
 	sim->dead = false;
-	if (ft_init_time(&sim->time, &sim->philo_has_eaten, &sim->ready))
+	if (ft_init_time(&sim->time, &sim->philo_has_eaten, &sim->ready, &sim->dead))
 		return (1);
 	if (pthread_create(&sim->time_thread, NULL, ft_time_routine, &sim->time))
 		return (1);

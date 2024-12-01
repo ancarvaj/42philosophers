@@ -18,33 +18,73 @@ int	ft_init_rules(char **argv, t_rules *rules, size_t *nb_of_philos)
 void	*ft_philo_routine(void	*p)
 {
 	t_philo_info	*info;
-	size_t		
-
+	size_t		last_action_time = 0;
+	size_t		current_time = 0;
+	
 	info = (t_philo_info *)p;
 	*(info->ready) = *(info->ready) - 1;
 	while (1)
 	{
 		if (*(info->ready) == 0)
 			break;
-		usleep(100);
+		usleep(10);
 	}
 	if (info->philo_id % 2 == 0)
-		usleep(1000);
-	while (1)
+		usleep(50);
+	while (!*(info->dead))
 	{
+
+
+		//FUCK YOU!!!!!
+
+
+
+
+
+
+
+
+
+
+		/*last_action_time = *(info->current_time);
 		while (pthread_mutex_lock(&info->fork[info->own_fork]))
-			usleep(1000);
+		{
+			if (info->rules.time_to_die < *(info->current_time) - last_action_time)
+			{
+				printf("%ld %ld is dead1\n", *(info->current_time), info->philo_id);
+				*(info->dead) = true;
+			}
+		}
 		printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
 		while (pthread_mutex_lock(&info->fork[info->side_fork]))
-			usleep(1000);
+		{
+			if (info->rules.time_to_die < *(info->current_time) - last_action_time)
+			{
+				printf("%ld %ld is dead2\n", *(info->current_time), info->philo_id);
+				*(info->dead) = true;
+			}
+		}
 		printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
 		printf("%ld %ld is eating\n", *(info->current_time), info->philo_id);
 		usleep(info->rules.time_to_eat * 1000);
+		current_time = *(info->current_time);
 		pthread_mutex_unlock(&info->fork[info->own_fork]);
 		pthread_mutex_unlock(&info->fork[info->side_fork]);
+		if (info->rules.time_to_die < current_time - last_action_time)
+		{
+			printf("%ld %ld is dead3\n", *(info->current_time), info->philo_id);
+			*(info->dead) = true;
+		}
+		last_action_time = current_time;
 		printf("%ld %ld is sleeping\n", *(info->current_time), info->philo_id);
 		usleep(info->rules.time_to_sleep * 1000);
-		printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);
+		current_time = *(info->current_time);
+		if (info->rules.time_to_die < current_time - last_action_time)
+		{
+			printf("%ld %ld is dead4\n", *(info->current_time), info->philo_id);
+			*(info->dead) = true;
+		}
+		printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);*/
 	}
 	return (NULL);
 }

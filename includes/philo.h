@@ -23,6 +23,7 @@ typedef struct s_time
 {
 	time_t	start_time;
 	time_t	current_time;
+	bool	*dead;
 	size_t	*ready;
 	size_t	*philo_has_eaten;
 }	t_time;
