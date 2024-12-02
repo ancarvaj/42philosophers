@@ -24,8 +24,8 @@ int	ft_calculate_dead(t_philo_info *info, time_t last_meal)
 	}
 	if (*(info->current_time) - last_meal > (time_t)info->rules.time_to_die)
 	{
-
 		printf("%ld %ld is dead\n", *(info->current_time), info->philo_id);
+		*(info->dead) = true;
 		return (1);
 	}
 	return (0);
@@ -115,12 +115,13 @@ void	*ft_philo_routine(void	*p)
 	last_meal = *(info->current_time);
 	if (info->philo_id % 2 == 0)
 		usleep(50);
-	while (!*(info->dead) && *(info->philo_has_eaten))
+	while (*(info->philo_has_eaten))
 	{
 		if (ft_get_fork(info, last_meal))//coger tenedores + no muere
 			return (NULL);
 		if (ft_eat(info, &last_meal)) // comer + soltar tenedores + restart philo_has_eatene si come
 			return (NULL);
+		//printf("l_m %ld\n", last_meal);
 		if (ft_sleep(info, last_meal))//dormir + pensar + no muere
 			return (NULL);
 	}
