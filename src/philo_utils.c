@@ -15,35 +15,93 @@ int	ft_init_rules(char **argv, t_rules *rules, size_t *nb_of_philos)
 	return (0);
 }
 
-int	ft_calculate_dead()
+int	ft_calculate_dead(t_philo_info *info, time_t last_meal)
 {
-	while (1)
+	if (*(info->dead) == true)
 	{
-		return (0);
+		printf("%ld %ld is dead\n", *(info->current_time), info->philo_id);
+		return (1);
+	}
+	if (*(info->current_time) - last_meal > (time_t)info->rules.time_to_die)
+	{
+
+		printf("%ld %ld is dead\n", *(info->current_time), info->philo_id);
+		return (1);
 	}
 	return (0);
 }
 
-int	ft_sleep(t_philo_info *info)
+int	ft_sleep(t_philo_info *info, time_t last_meal)
 {
+	size_t	time_slept;
+
+
+	printf("%ld %ld is sleeping\n", *(info->current_time), info->philo_id);
+	time_slept = 0;
 	while (1)
 	{
-		return (0);
+		if (info->rules.time_to_sleep - time_slept >= 5)
+			usleep(5 * 1000);
+		else
+		{
+			usleep((info->rules.time_to_sleep - time_slept) * 1000);
+			printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);
+		}
+		if (ft_calculate_dead(info, last_meal))
+			return (1);
+		time_slept = time_slept + 5;
+		if (info->rules.time_to_sleep - time_slept == 0)
+		{
+			printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);
+			return (0);
+		}	
 	}
 	return (0);
 }
+
+int	ft_eat(t_philo_info *info, time_t *last_meal)
+{
+	printf("%ld %ld is eating\n", *(info->current_time), info->philo_id);
+	usleep(info->rules.time_to_eat * 1000);
+	*last_meal = *(info->current_time);
+	if (pthread_mutex_unlock(&info->fork[info->own_fork]))
+		return (1);
+	if (pthread_mutex_unlock(&info->fork[info->side_fork]))
+		return (1);
+	return (0);
+}
+
 int	ft_get_fork(t_philo_info *info, time_t last_meal)
 {
+	bool	own_mine;
+	bool	side_mine;
+
+	own_mine = false;
+	side_mine = false;
 	while (1)
 	{
-		if (pthread_mutex_lock(own_fork) && pthread_mutex_lock(side_fork))
+		if (!pthread_mutex_lock(&info->fork[info->own_fork]))
+		{
+
+			printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
+			own_mine = true;
+		}
+		if (!pthread_mutex_lock(&info->fork[info->side_fork]))
+		{
+			printf("%ld %ld has taken a fork\n", *(info->current_time), info->philo_id);
+			side_mine = true;
+		}
+		if (own_mine && side_mine)
 			return (0);
-		if (ft_calculate_dead(time))
+		if (ft_calculate_dead(info, last_meal))
 			return (1);
-		usleep(10);
 	}
 	return (0);
 }
+
+//si empieza a comer no muere
+//cuando termina de comer vuelve a iniciar el contador de muerte
+
 
 void	*ft_philo_routine(void	*p)
 {
@@ -59,12 +117,11 @@ void	*ft_philo_routine(void	*p)
 		usleep(50);
 	while (!*(info->dead) && *(info->philo_has_eaten))
 	{
-		last_meal = 
-		if (ft_get_fork(info))//coger tenedores + comer
+		if (ft_get_fork(info, last_meal))//coger tenedores + no muere
 			return (NULL);
-		if (ft_eat(info)) // comer + soltar tenedores
+		if (ft_eat(info, &last_meal)) // comer + soltar tenedores + restart philo_has_eatene si come
 			return (NULL);
-		if (ft_sleep(fork))//dormir + pensar
+		if (ft_sleep(info, last_meal))//dormir + pensar + no muere
 			return (NULL);
 	}
 	return (NULL);
@@ -75,7 +132,6 @@ int	ft_init_info(t_philo_info *info, size_t nb_of_philos, t_simulation *sim)
 	size_t	i;
 
 	i = 0;
-
 	while (i < nb_of_philos)
 	{
 		info[i].ready = &sim->ready;
@@ -86,10 +142,11 @@ int	ft_init_info(t_philo_info *info, size_t nb_of_philos, t_simulation *sim)
 		info[i].current_time = &sim->time.current_time;
 		info[i].philo_id = i + 1;
 		info[i].philo_ate = false;
-		if (i + 1 == nb_of_philos)
+		info[i].own_fork = i;
+		if (info[i].philo_id == nb_of_philos)
 			info[i].side_fork = 0;
 		else
-			info[i].side_fork = i;
+			info[i].side_fork = i + 1;
 		i++;
 	}
 	return (0);
