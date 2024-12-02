@@ -54,7 +54,8 @@ int	ft_sleep(t_philo_info *info, time_t last_meal)
 		{
 			printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);
 			return (0);
-		}	
+		}
+		usleep(500);
 	}
 	return (0);
 }
@@ -93,6 +94,7 @@ int	ft_get_fork(t_philo_info *info, time_t last_meal)
 		}
 		if (own_mine && side_mine)
 			return (0);
+		usleep(500);
 		if (ft_calculate_dead(info, last_meal))
 			return (1);
 	}
