@@ -13,10 +13,10 @@
 
 typedef struct s_rules
 {
-	size_t time_to_die;
-	size_t time_to_eat;
-	size_t time_to_sleep;
-	size_t n_times_must_eat;
+	size_t	time_to_die;
+	size_t	time_to_eat;
+	size_t	time_to_sleep;
+	int	n_times_must_eat;
 }	t_rules;
 
 typedef struct s_time
