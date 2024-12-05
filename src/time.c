@@ -36,14 +36,15 @@ void	*ft_time_routine(void *p)
 	time->start_time = ft_timevaltoms(tv);
 	while (*(time->dead) == false)
 	{
-		usleep(250);
-		//printf("aaaa\n");
-		if (*(time->philo_has_eaten) == 0)
+		if (*(time->philo_has_eaten) <= 0)
+		{
 			return (NULL);
+		}
 		if (gettimeofday(&tv, NULL))
 			return (NULL);
 		time->current_time = ft_get_time(time->start_time, ft_timevaltoms(tv));
 	}
+	//printf("bbb\n");
 	return (NULL);
 }	
 

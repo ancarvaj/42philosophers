@@ -23,31 +23,31 @@ typedef struct s_time
 {
 	time_t	start_time;
 	time_t	current_time;
-	bool	*dead;
+	int	*dead;
 	size_t	*ready;
-	size_t	*philo_has_eaten;
+	int	*philo_has_eaten;
 }	t_time;
 
 typedef struct s_philo_info
 {	
 	size_t		philo_id;
-	bool		philo_ate;
 	size_t		own_fork;
 	size_t		side_fork;
 	time_t		*current_time;
 	t_rules		rules;
-	size_t		*philo_has_eaten;
-	bool		*dead;
+	int		*philo_has_eaten;
+	int		more_than_one;
+	int		*dead;
 	size_t		*ready;
 	pthread_mutex_t	*fork;
 }	t_philo_info;
 
 typedef struct s_simulation
 {
-	bool		dead;
+	int		dead;
 	t_rules		rules;
 	size_t		nb_of_philos;
-	size_t		philo_has_eaten;
+	int		philo_has_eaten;
 	size_t		ready;
 	t_time		time;
 	pthread_t	time_thread;
