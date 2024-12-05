@@ -96,11 +96,11 @@ int	ft_sleep(t_philo_info *info, time_t last_meal)
 	{
 		if (ft_calculate_dead(info, last_meal))
 			return (1);
-		if (info->rules.time_to_sleep - time_slept >= 10)
-			usleep(10 * 1000);
+		if (info->rules.time_to_sleep - time_slept >= 5)
+			usleep(5 * 1000);
 		else
 			usleep((info->rules.time_to_sleep - time_slept) * 1000);
-				time_slept = time_slept + 10;
+				time_slept = time_slept + 5;
 	}
 	printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);
 	return (0);
@@ -114,13 +114,13 @@ int	ft_eat(t_philo_info *info, time_t *last_meal)
 	printf("%ld %ld is eating\n", *(info->current_time), info->philo_id);
 	while (info->rules.time_to_eat - time_ate > 0)
 	{
-		if (time_ate == 30)
+		if (time_ate == 15)
 			*last_meal = *(info->current_time);
-		if (info->rules.time_to_eat - time_ate >= 10)
-			usleep(10 * 1000);
+		if (info->rules.time_to_eat - time_ate >= 5)
+			usleep(5 * 1000);
 		else
 			usleep((info->rules.time_to_eat - time_ate) * 1000);
-		time_ate = time_ate + 10;
+		time_ate = time_ate + 5;
 	}
 	pthread_mutex_unlock(&info->fork[info->own_fork]);
 	pthread_mutex_unlock(&info->fork[info->side_fork]);
