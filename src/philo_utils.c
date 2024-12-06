@@ -66,7 +66,7 @@ int	ft_init_philo(pthread_t *philo, t_philo_info *info, size_t nb_of_philo)
 	return (0);
 }
 
-int	ft_calculate_dead(t_philo_info *info, time_t last_meal)
+int	ft_calculate_dead(t_philo_info *info, time_t last_meal, time_t current_time)
 {
 	if (*(info->dead) == 1)
 	{
@@ -76,7 +76,7 @@ int	ft_calculate_dead(t_philo_info *info, time_t last_meal)
 	}
 	else if (*(info->current_time) - last_meal > (time_t)info->rules.time_to_die)
 	{
-		printf("%ld %ld died\n", *(info->current_time), info->philo_id);
+		printf("%ld %ld died\n", current_time - 15, info->philo_id);
 		pthread_mutex_unlock(&info->fork[info->own_fork]);
 		pthread_mutex_unlock(&info->fork[info->side_fork]);
 		*(info->dead) = 1;
@@ -94,13 +94,13 @@ int	ft_sleep(t_philo_info *info, time_t last_meal)
 	time_slept = 0;
 	while (info->rules.time_to_sleep - time_slept > 0)
 	{
-		if (ft_calculate_dead(info, last_meal))
+		if (ft_calculate_dead(info, last_meal, *(info->current_time)))
 			return (1);
 		if (info->rules.time_to_sleep - time_slept >= 5)
 			usleep(5 * 1000);
 		else
 			usleep((info->rules.time_to_sleep - time_slept) * 1000);
-				time_slept = time_slept + 5;
+		time_slept = time_slept + 5;
 	}
 	printf("%ld %ld is thinking\n", *(info->current_time), info->philo_id);
 	return (0);
@@ -120,6 +120,8 @@ int	ft_eat(t_philo_info *info, time_t *last_meal)
 			usleep(5 * 1000);
 		else
 			usleep((info->rules.time_to_eat - time_ate) * 1000);
+		if (*(info->dead) == 1)
+			return (1);
 		time_ate = time_ate + 5;
 	}
 	pthread_mutex_unlock(&info->fork[info->own_fork]);
@@ -137,7 +139,7 @@ int	ft_get_fork(t_philo_info *info, time_t last_meal)
 	own_fork = 0;
 	while (!side_fork || !own_fork)
 	{
-		if (ft_calculate_dead(info, last_meal))
+		if (ft_calculate_dead(info, last_meal, *(info->current_time)))
 			return (1);
 		if (!own_fork && !pthread_mutex_lock(&info->fork[info->own_fork]))
 		{
@@ -168,7 +170,7 @@ void	*ft_philo_routine(void	*p)
 		usleep(50);
 	last_meal = 0;
 	if (info->philo_id % 2)
-		usleep(50);
+		usleep(150);
 	while (*(info->philo_has_eaten) > 0 && !*(info->dead))
 	{
 		if (ft_get_fork(info, last_meal))
