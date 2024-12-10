@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 14:21:10 by ancarvaj          #+#    #+#             */
+/*   Updated: 2024/12/10 14:21:25 by ancarvaj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_init_time(t_time *time, int *philo_has_eaten, size_t *ready, int *dead)
@@ -35,7 +47,7 @@ int	ft_init_sim(t_simulation *sim, char **av)
 int	main(int ac, char *av[])
 {
 	t_simulation	sim;
-	
+
 	if (ac != 5 && ac != 6)
 		return (1);
 	if (ft_check_args(av + 1))

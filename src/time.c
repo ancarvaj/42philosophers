@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 14:23:04 by ancarvaj          #+#    #+#             */
+/*   Updated: 2024/12/10 16:11:29 by ancarvaj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 time_t	ft_stoms(time_t sec)
@@ -44,7 +56,6 @@ void	*ft_time_routine(void *p)
 			return (NULL);
 		time->current_time = ft_get_time(time->start_time, ft_timevaltoms(tv));
 	}
-	//printf("bbb\n");
 	return (NULL);
 }	
 
