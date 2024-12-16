@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:43:25 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 10:39:05 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:09:28 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ typedef struct s_mutex_control
 	pthread_mutex_t	time_ready;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	have_eaten;
+	pthread_mutex_t	current_time;//HACER ESTO
 }	t_mutex_control;
 
 typedef struct s_time
 {
 	time_t	start_time;
 	time_t	current_time;
+	time_t	last_meal;
 }	t_time;
 
 typedef struct s_philo_info
@@ -86,7 +88,7 @@ typedef struct s_simulation
 }	t_simulation;
 
 time_t			ft_get_time(void);
-void			ft_set_time(t_time *time);
+time_t			ft_set_time(time_t start_time);
 
 int				ft_init_sim(t_simulation *sim, char **av);
 
@@ -100,17 +102,20 @@ void			*ft_philo_routine(void	*p);
 
 int				ft_dead(t_philo_info *info);
 void			ft_set_dead(t_philo_info *info);
-int				ft_check_dead(t_philo_info *info, time_t last_meal);
+int				ft_check_dead(t_philo_info *info);
 
-int				ft_take_fork(t_philo_info *info, time_t last_meal);
-int				ft_eat(t_philo_info *info, time_t *last_meal);
-int				ft_sleep(t_philo_info *info, time_t last_meal);
+int				ft_take_fork(t_philo_info *info);
+int				ft_eat(t_philo_info *info);
+int				ft_sleep(t_philo_info *info);
 
 int				ft_check_fork(t_philo_info *info);
 int				ft_check_n_fork(t_philo_info *info);
-int				ft_wait_fork(t_philo_info *info, time_t last_meal);
-int				ft_wait_n_fork(t_philo_info *info, time_t last_meal);
+int				ft_wait_fork(t_philo_info *info);
+int				ft_wait_n_fork(t_philo_info *info);
 
 void			*ft_unlock_fork(t_philo_info *info);
+
+void				ft_print_message(t_philo_info *info, const char *message);
+int				ft_set_check_time(t_philo_info *info);
 
 #endif

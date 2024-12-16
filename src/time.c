@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:23:04 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 10:45:42 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 12:07:19 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ time_t	ft_get_time(void)
 	return (time);
 }
 
-void	ft_set_time(t_time *time)
+time_t	ft_set_time(time_t start_time)
 {
-	time->current_time = ft_get_time() - time->start_time;
+	return (ft_get_time() - start_time);
 }

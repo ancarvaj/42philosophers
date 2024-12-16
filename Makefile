@@ -1,5 +1,5 @@
 NAME = philo
-CC = cc -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror 
 CFLAGS = -Iincludes/
 #CFLAGS += -fsanitize=thread -g3
 SDIR = src/
@@ -10,7 +10,7 @@ OBJS = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) $(CFLAGS)
+	$(CC)  -o $(NAME) $(OBJS)  $(CFLAGS)
 
 .PHONY: clean
 clean:

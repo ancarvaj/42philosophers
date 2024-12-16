@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:05:02 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/14 15:04:03 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:11:36 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	ft_init_mutex(t_mutex_control *control)
 	pthread_mutex_init(&control->time_ready, NULL);
 	pthread_mutex_init(&control->dead, NULL);
 	pthread_mutex_init(&control->have_eaten, NULL);
+	pthread_mutex_init(&control->current_time, NULL);
 }
 
 int	ft_init_sim(t_simulation *sim, char **av)

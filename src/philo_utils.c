@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:57 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 10:43:18 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 12:09:41 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,24 @@ int	ft_have_eaten(t_philo_info *info)
 void	*ft_philo_routine(void	*p)
 {
 	t_philo_info	*info;
-	time_t			last_meal;
 
 	info = (t_philo_info *)p;
 	ft_ready(info);
 	while (ft_check_time_ready(info))
 		usleep(250);
 	info->time.start_time = ft_get_time();
-	last_meal = 0;
-	ft_set_time(&info->time);
+	info->time.current_time = ft_set_time(info->time.start_time);
 	if (info->philo_id % 2)
 		usleep(60000);
 	while (!ft_dead(info))
 	{
-		if (ft_take_fork(info, last_meal))
+		if (ft_take_fork(info))
 			return (ft_unlock_fork(info));
-		if (ft_eat(info, &last_meal))
+		if (ft_eat(info))
 			return (ft_unlock_fork(info));
 		if (ft_have_eaten(info))
 			return (NULL);
-		if (ft_sleep(info, last_meal))
+		if (ft_sleep(info))
 			return (NULL);
 	}
 	return (NULL);
