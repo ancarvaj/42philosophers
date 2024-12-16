@@ -6,13 +6,14 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:10 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/13 13:46:06 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:39:39 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned int	ft_message_error(const char *custom, const char *err, unsigned int status)
+unsigned int	ft_message_error(const char *custom,
+		const char *err, unsigned int status)
 {
 	if (custom)
 	{

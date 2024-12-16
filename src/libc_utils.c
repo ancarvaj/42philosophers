@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:37 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/12 16:19:51 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:41:08 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	ft_atoi(const char *s)
 	n = 0;
 	while (s[++i])
 		n = (n * 10) + (s[i] - '0');
-	if (n > INT_MAX)//write(2, "number to large")
+	if (n > INT_MAX)
 		return (-999);
-	if (n == 0)//write(2, "number is 0",,a
+	if (n == 0)
 		return (-666);
 	return (n);
 }

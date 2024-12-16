@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:43:25 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/14 21:06:22 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:39:05 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,21 @@ typedef struct s_time
 typedef struct s_philo_info
 {
 	t_mutex_control		*control;
-	size_t			philo_id;
-	t_time			time;
-	t_rules			rules;
-	int				*philo_have_eaten;
-	int				*dead;
+	size_t				philo_id;
+	t_time				time;
+	t_rules				rules;
+	int					*philo_have_eaten;
+	int					*dead;
 	size_t				*time_ready;
-	pthread_mutex_t			fork;
-	int				fork_took;
-	pthread_mutex_t			*n_fork;
-	int				*n_fork_took;
+	pthread_mutex_t		fork;
+	int					fork_took;
+	pthread_mutex_t		*n_fork;
+	int					*n_fork_took;
 }	t_philo_info;
 
 typedef struct s_simulation
 {
-	t_mutex_control		control;
+	t_mutex_control	control;
 	size_t			time_ready;
 	int				dead;
 	int				philo_have_eaten;
@@ -85,32 +85,32 @@ typedef struct s_simulation
 	t_philo_info	info[200];
 }	t_simulation;
 
-size_t			ft_strlen(const char *s);
+time_t			ft_get_time(void);
+void			ft_set_time(t_time *time);
+
+int				ft_init_sim(t_simulation *sim, char **av);
+
 unsigned int	ft_message_error(const char *custom,
 					const char *err, unsigned int status);
-time_t			ft_stoms(time_t sec);
-time_t			ft_ustoms(suseconds_t usec);
-time_t			ft_timevaltoms(struct timeval tv);
-time_t			ft_current_time(time_t start_time, time_t current_time);
-int				ft_atoi(const char *s);
 int				ft_check_args(const char **av);
+size_t			ft_strlen(const char *s);
+int				ft_atoi(const char *s);
+
 void			*ft_philo_routine(void	*p);
-int				ft_init_rules(char **argv, t_rules *rules,
-					size_t *nb_of_philos);
-int				ft_init_info(t_philo_info *info, size_t nb_of_philos,
-					t_simulation *sim);
-int				ft_init_philo(pthread_t *info, t_philo_info *p,
-					size_t nb_of_philo);
-int				ft_init_rules(char **argv, t_rules *rules,
-					size_t *nb_of_philos);
-int				ft_init_info(t_philo_info *info, size_t nb_of_philos,
-					t_simulation *sim);
-int				ft_init_philo(pthread_t *philo, t_philo_info *info,
-					size_t nb_of_philo);
-int				ft_init_sim(t_simulation *sim, char **av);
-int				ft_calculate_dead(t_philo_info *info, time_t last_meal, time_t current_time);
-int			ft_check_dead(t_philo_info *info, time_t last_meal);
-int			verify_dead(t_philo_info *info);
-time_t			ft_get_time();
-void			ft_set_time(t_time *time);
+
+int				ft_dead(t_philo_info *info);
+void			ft_set_dead(t_philo_info *info);
+int				ft_check_dead(t_philo_info *info, time_t last_meal);
+
+int				ft_take_fork(t_philo_info *info, time_t last_meal);
+int				ft_eat(t_philo_info *info, time_t *last_meal);
+int				ft_sleep(t_philo_info *info, time_t last_meal);
+
+int				ft_check_fork(t_philo_info *info);
+int				ft_check_n_fork(t_philo_info *info);
+int				ft_wait_fork(t_philo_info *info, time_t last_meal);
+int				ft_wait_n_fork(t_philo_info *info, time_t last_meal);
+
+void			*ft_unlock_fork(t_philo_info *info);
+
 #endif
