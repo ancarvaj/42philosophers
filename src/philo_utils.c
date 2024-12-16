@@ -6,11 +6,19 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:57 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 12:09:41 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:58:22 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_set_check_time(t_philo_info *info)
+{
+	pthread_mutex_lock(&info->control->current_time);
+	info->time.current_time = ft_set_time(info->time.start_time);
+	pthread_mutex_unlock(&info->control->current_time);
+	return (1);
+}
 
 int	ft_check_time_ready(t_philo_info *info)
 {

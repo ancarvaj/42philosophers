@@ -6,11 +6,18 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:37 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 10:41:08 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:58:52 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_print_message(t_philo_info *info, const char *message)
+{
+	pthread_mutex_lock(&info->control->current_time);
+	printf("%ld %ld %s\n", info->time.current_time, info->philo_id, message);
+	pthread_mutex_unlock(&info->control->current_time);
+}
 
 size_t	ft_strlen(const char *s)
 {

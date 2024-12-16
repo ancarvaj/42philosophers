@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:43:25 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 13:09:28 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:56:13 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int				ft_wait_n_fork(t_philo_info *info);
 
 void			*ft_unlock_fork(t_philo_info *info);
 
-void				ft_print_message(t_philo_info *info, const char *message);
+void			ft_print_message(t_philo_info *info, const char *message);
 int				ft_set_check_time(t_philo_info *info);
 
 #endif
