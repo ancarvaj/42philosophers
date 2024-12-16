@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:05:02 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 13:11:36 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:03:03 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,31 @@ int	ft_init_rules(char **argv, t_rules *rules, size_t *nb_of_philos)
 	return (0);
 }
 
+time_t ft_get_machine_power(size_t	tick)
+{
+	time_t time = ft_get_time();
+	size_t	i = 0;
+
+	while (i < tick)
+			i++;
+	time = ft_set_time(time);
+	if (time > 98)
+		return (95);
+	return (96);
+}
+
 int	ft_init_info(t_philo_info *info, size_t nb_of_philos, t_simulation *sim)
 {
 	size_t	i;
+	float	machine_power;
 
 	i = -1;
+	machine_power = (float)ft_get_machine_power(42290000) / 100;
+	printf("machine power %f\n", machine_power);
 	while (++i < nb_of_philos)
 	{
 		info[i].philo_id = i + 1;
+		info[i].machine_power = machine_power;
 		info[i].rules = sim->rules;
 		info[i].philo_have_eaten = &sim->philo_have_eaten;
 		info[i].dead = &sim->dead;

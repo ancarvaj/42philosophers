@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:57 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 13:58:22 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:35:01 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	ft_have_eaten(t_philo_info *info)
 	pthread_mutex_unlock(&info->control->have_eaten);
 	return (0);
 }
+
+
 
 void	*ft_philo_routine(void	*p)
 {

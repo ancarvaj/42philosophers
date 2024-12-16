@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:43:25 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 13:56:13 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:39:31 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_mutex_control
 	pthread_mutex_t	time_ready;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	have_eaten;
-	pthread_mutex_t	current_time;//HACER ESTO
+	pthread_mutex_t	current_time;
 }	t_mutex_control;
 
 typedef struct s_time
@@ -62,6 +62,7 @@ typedef struct s_time
 
 typedef struct s_philo_info
 {
+	float				machine_power;
 	t_mutex_control		*control;
 	size_t				philo_id;
 	t_time				time;
