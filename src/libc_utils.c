@@ -14,6 +14,7 @@
 
 void	ft_print_message(t_philo_info *info, const char *message)
 {
+	ft_set_check_time(info);
 	pthread_mutex_lock(&info->control->current_time);
 	printf("%ld %ld %s\n", info->time.current_time, info->philo_id, message);
 	pthread_mutex_unlock(&info->control->current_time);

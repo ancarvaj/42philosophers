@@ -4,7 +4,7 @@
 /*   philo_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                               +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:18:11 by ancarvaj          #+#    #+#             */
 /*   Updated: 2024/12/16 16:02:29 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
@@ -54,8 +54,8 @@ int	ft_sleep(t_philo_info *info)
 	slept_time = 0;
 	while (slept_time <= info->rules.time_to_sleep)
 	{
-		ft_set_check_time(info);
 		usleep(5000 * info->machine_power);
+		ft_set_check_time(info);
 		if (ft_check_dead(info))
 			return (1);
 		slept_time = slept_time + 5;

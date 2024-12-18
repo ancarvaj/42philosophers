@@ -51,7 +51,6 @@ int	ft_init_info(t_philo_info *info, size_t nb_of_philos, t_simulation *sim)
 
 	i = -1;
 	machine_power = (float)ft_get_machine_power(42290000) / 100;
-	printf("machine power %f\n", machine_power);
 	while (++i < nb_of_philos)
 	{
 		info[i].philo_id = i + 1;

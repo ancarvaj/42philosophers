@@ -14,7 +14,6 @@
 
 int	ft_check_fork(t_philo_info *info)
 {
-	info->time.current_time = ft_set_time(info->time.start_time);
 	pthread_mutex_lock(&info->fork);
 	if (info->fork_took)
 	{
@@ -27,7 +26,6 @@ int	ft_check_fork(t_philo_info *info)
 
 int	ft_check_n_fork(t_philo_info *info)
 {
-	ft_set_check_time(info);
 	pthread_mutex_lock(info->n_fork);
 	if (*(info->n_fork_took))
 	{
@@ -43,6 +41,7 @@ int	ft_wait_fork(t_philo_info *info)
 	while (ft_check_fork(info))
 	{
 		usleep(1000);
+		ft_set_check_time(info);
 		if (ft_check_dead(info))
 			return (1);
 	}
@@ -58,6 +57,7 @@ int	ft_wait_n_fork(t_philo_info *info)
 	while (ft_check_n_fork(info))
 	{
 		usleep(1000);
+		ft_set_check_time(info);
 		if (ft_check_dead(info))
 			return (1);
 	}

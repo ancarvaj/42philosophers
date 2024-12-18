@@ -36,10 +36,9 @@ int	ft_check_dead(t_philo_info *info)
 {
 	if (ft_dead(info))
 		return (1);
-	if (info->time.current_time - 5 - info->time.last_meal
+	if (info->time.current_time - 3 - info->time.last_meal
 		> (time_t)info->rules.time_to_die)
 	{
-		ft_set_check_time(info);
 		ft_set_dead(info);
 		ft_print_message(info, "died");
 		return (1);
