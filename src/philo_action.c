@@ -4,9 +4,9 @@
 /*   philo_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                               +#+#+#+#+#+   +#+           */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:18:11 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 16:02:29 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:12:33 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ int	ft_eat(t_philo_info *info)
 {
 	size_t	eat_time;
 
-	if (ft_dead(info))
+	if (ft_check_dead(info))
 		return (1);
-	ft_set_check_time(info);
 	ft_print_message(info, "is eating");
 	eat_time = 0;
-	info->time.last_meal = info->time.current_time;
+	info->time.last_meal = *(info->time.current_time);
 	while (eat_time <= info->rules.time_to_eat)
 	{
 		usleep(5000 * info->machine_power);
@@ -47,22 +46,19 @@ int	ft_sleep(t_philo_info *info)
 {
 	size_t	slept_time;
 
-	if (ft_dead(info))
+	if (ft_check_dead(info))
 		return (1);
-	ft_set_check_time(info);
-	ft_print_message(info, "is sleeping");
 	slept_time = 0;
+	ft_print_message(info, "is sleeping");
 	while (slept_time <= info->rules.time_to_sleep)
 	{
 		usleep(5000 * info->machine_power);
-		ft_set_check_time(info);
 		if (ft_check_dead(info))
 			return (1);
 		slept_time = slept_time + 5;
 	}
 	if (ft_check_dead(info))
 		return (1);
-	ft_set_check_time(info);
 	ft_print_message(info, "is thinking");
 	return (0);
 }

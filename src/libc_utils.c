@@ -6,17 +6,32 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:37 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 13:58:52 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:13:16 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	ft_init_fork(int i, t_philo_info *info, size_t nb_of_philos)
+{
+	pthread_mutex_init(&info[i].fork, NULL);
+	info[i].fork_took = 0;
+	if (info[i].philo_id == nb_of_philos)
+	{
+		info[i].n_fork = &info[0].fork;
+		info[i].n_fork_took = &info[0].fork_took;
+	}
+	else
+	{
+		info[i].n_fork = &info[i + 1].fork;
+		info[i].n_fork_took = &info[i + 1].fork_took;
+	}
+}
+
 void	ft_print_message(t_philo_info *info, const char *message)
 {
-	ft_set_check_time(info);
 	pthread_mutex_lock(&info->control->current_time);
-	printf("%ld %ld %s\n", info->time.current_time, info->philo_id, message);
+	printf("%ld %ld %s\n", *(info->time.current_time), info->philo_id, message);
 	pthread_mutex_unlock(&info->control->current_time);
 }
 

@@ -6,16 +6,16 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:22:57 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 15:35:01 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/20 22:05:20 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_set_check_time(t_philo_info *info)
+int	ft_set_check_time(t_time_info *info)
 {
 	pthread_mutex_lock(&info->control->current_time);
-	info->time.current_time = ft_set_time(info->time.start_time);
+	info->current_time = ft_set_time(info->start_time);
 	pthread_mutex_unlock(&info->control->current_time);
 	return (1);
 }
@@ -51,8 +51,6 @@ int	ft_have_eaten(t_philo_info *info)
 	return (0);
 }
 
-
-
 void	*ft_philo_routine(void	*p)
 {
 	t_philo_info	*info;
@@ -61,10 +59,9 @@ void	*ft_philo_routine(void	*p)
 	ft_ready(info);
 	while (ft_check_time_ready(info))
 		usleep(250);
-	info->time.start_time = ft_get_time();
-	info->time.current_time = ft_set_time(info->time.start_time);
 	if (info->philo_id % 2)
 		usleep(60000);
+	info->time.last_meal = 0;
 	while (!ft_dead(info))
 	{
 		if (ft_take_fork(info))

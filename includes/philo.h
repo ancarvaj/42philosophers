@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:43:25 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/16 15:39:31 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:14:57 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@
 # include <string.h>
 
 # define INVALID_ARG "\nInvalid number of arguments\n\n"
-
-# define USAGE " Usage: ./philo [number of philos] [time to die] \
-[time to eat] [time to sleep] [number of times each philo must eat] \
-\n\n Last argument is optional\n\n"
 
 # define NOT_NUMBER " Is not a valid number, do no use simbols, \
 permited character from 0 to 9\n\n"
@@ -55,10 +51,19 @@ typedef struct s_mutex_control
 
 typedef struct s_time
 {
-	time_t	start_time;
-	time_t	current_time;
+	time_t	*current_time;
 	time_t	last_meal;
 }	t_time;
+
+typedef struct s_time_info
+{
+	time_t			start_time;
+	time_t			current_time;
+	int				*dead;
+	int				*philo_have_eaten;
+	size_t			*time_ready;
+	t_mutex_control	*control;
+}	t_time_info;
 
 typedef struct s_philo_info
 {
@@ -78,6 +83,8 @@ typedef struct s_philo_info
 
 typedef struct s_simulation
 {
+	pthread_t		time;
+	t_time_info		time_info;
 	t_mutex_control	control;
 	size_t			time_ready;
 	int				dead;
@@ -92,6 +99,7 @@ time_t			ft_get_time(void);
 time_t			ft_set_time(time_t start_time);
 
 int				ft_init_sim(t_simulation *sim, char **av);
+void			ft_init_fork(int i, t_philo_info *info, size_t nb_of_philos);
 
 unsigned int	ft_message_error(const char *custom,
 					const char *err, unsigned int status);
@@ -117,6 +125,6 @@ int				ft_wait_n_fork(t_philo_info *info);
 void			*ft_unlock_fork(t_philo_info *info);
 
 void			ft_print_message(t_philo_info *info, const char *message);
-int				ft_set_check_time(t_philo_info *info);
+int				ft_set_check_time(t_time_info *info);
 
 #endif
