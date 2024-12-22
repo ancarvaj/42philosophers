@@ -25,20 +25,22 @@ int	ft_eat(t_philo_info *info)
 {
 	size_t	eat_time;
 
-	if (ft_check_dead(info))
+	if (ft_dead(info))
 		return (1);
 	ft_print_message(info, "is eating");
 	eat_time = 0;
 	info->time.last_meal = *(info->time.current_time);
 	while (eat_time <= info->rules.time_to_eat)
 	{
-		usleep(5000 * info->machine_power);
-		eat_time = eat_time + 5;
+		usleep(1000 * 0.94);
+		if (ft_dead(info))
+			return (1);
+		eat_time = eat_time + 1;
 	}
+	ft_unlock_fork(info);
 	info->rules.n_times_must_eat = info->rules.n_times_must_eat - 1;
 	if (info->rules.n_times_must_eat == 0)
 		return (1);
-	ft_unlock_fork(info);
 	return (0);
 }
 
@@ -46,16 +48,16 @@ int	ft_sleep(t_philo_info *info)
 {
 	size_t	slept_time;
 
-	if (ft_check_dead(info))
+	if (ft_dead(info))
 		return (1);
 	slept_time = 0;
 	ft_print_message(info, "is sleeping");
 	while (slept_time <= info->rules.time_to_sleep)
 	{
-		usleep(5000 * info->machine_power);
+		usleep(1000 * 0.92);
 		if (ft_check_dead(info))
 			return (1);
-		slept_time = slept_time + 5;
+		slept_time = slept_time + 1;
 	}
 	if (ft_check_dead(info))
 		return (1);

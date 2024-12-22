@@ -51,6 +51,7 @@ int	ft_have_eaten(t_philo_info *info)
 	return (0);
 }
 
+
 void	*ft_philo_routine(void	*p)
 {
 	t_philo_info	*info;
@@ -59,7 +60,7 @@ void	*ft_philo_routine(void	*p)
 	ft_ready(info);
 	while (ft_check_time_ready(info))
 		usleep(250);
-	if (info->philo_id % 2)
+	if (!(info->philo_id % 2))
 		usleep(60000);
 	info->time.last_meal = 0;
 	while (!ft_dead(info))

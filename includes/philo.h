@@ -67,7 +67,6 @@ typedef struct s_time_info
 
 typedef struct s_philo_info
 {
-	float				machine_power;
 	t_mutex_control		*control;
 	size_t				philo_id;
 	t_time				time;

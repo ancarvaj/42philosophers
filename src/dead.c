@@ -37,7 +37,7 @@ int	ft_check_dead(t_philo_info *info)
 	if (ft_dead(info))
 		return (1);
 	pthread_mutex_lock(&info->control->current_time);
-	if (*(info->time.current_time) - 3 - info->time.last_meal
+	if (*(info->time.current_time) - info->time.last_meal
 		> (time_t)info->rules.time_to_die)
 	{
 		pthread_mutex_unlock(&info->control->current_time);

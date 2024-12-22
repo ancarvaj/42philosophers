@@ -31,14 +31,31 @@ int	ft_init_rules(char **argv, t_rules *rules, size_t *nb_of_philos)
 	return (0);
 }
 
+time_t	ft_machine_power()
+{
+	time_t	t;
+	size_t	i;
+
+	i = 0;
+	t = ft_get_time();
+	while (i < 6000000)
+		i++;
+	t = ft_set_time(t);
+	return (t);
+}
+
 int	ft_init_info(t_philo_info *info, size_t nb_of_philos, t_simulation *sim)
 {
 	size_t	i;
+	float	t;
 
 	i = -1;
+	t = (1 - ft_machine_power());// / 10;
+	printf("%f\n", t);
 	while (++i < nb_of_philos)
 	{
 		info[i].philo_id = i + 1;
+		info[i].machine_power = 1 - t;
 		info[i].rules = sim->rules;
 		info[i].philo_have_eaten = &sim->philo_have_eaten;
 		info[i].dead = &sim->dead;
