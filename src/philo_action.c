@@ -29,7 +29,9 @@ int	ft_eat(t_philo_info *info)
 		return (1);
 	ft_print_message(info, "is eating");
 	eat_time = 0;
+	pthread_mutex_lock(&info->control->current_time);
 	info->time.last_meal = *(info->time.current_time);
+	pthread_mutex_unlock(&info->control->current_time);
 	while (eat_time <= info->rules.time_to_eat)
 	{
 		usleep(1000 * 0.94);
