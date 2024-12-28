@@ -30,9 +30,9 @@ int	get_ms(time_t time_should_be,t_philo_info *info)
 	pthread_mutex_unlock(&info->control->current_time);
 	while (current_time <= time_should_be)
 	{
+		usleep(100);
 		if (ft_dead(info))
 			return (1);
-		usleep(100);
 		pthread_mutex_lock(&info->control->current_time);
 		current_time = *(info->time.current_time);
 		pthread_mutex_unlock(&info->control->current_time);
@@ -48,11 +48,12 @@ int	ft_eat(t_philo_info *info)
 	size_t	eat_time;
 	time_t	last_time;
 
-	ft_print_message(info, "is eating");
 	pthread_mutex_lock(&info->control->current_time);
 	info->time.last_meal = *(info->time.current_time);//mutex
-	last_time = info->time.last_meal;
 	pthread_mutex_unlock(&info->control->current_time);
+	if (ft_print_message(info, "is eating"))
+		return (1);
+	last_time = info->time.last_meal;
 	eat_time = 0;
 	while (eat_time <= info->rules.time_to_eat)
 	{
@@ -79,11 +80,12 @@ int	ft_sleep(t_philo_info *info)
 	size_t	slept_time;
 	time_t	last_time;
 
-	ft_print_message(info, "is sleeping");
-	slept_time = 0;
 	pthread_mutex_lock(&info->control->current_time);
 	last_time = *(info->time.current_time);
 	pthread_mutex_unlock(&info->control->current_time);
+	if (ft_print_message(info, "is sleeping"))
+		return (1);
+	slept_time = 0;
 	while (slept_time <= info->rules.time_to_sleep)
 	{
 		last_time += 1;
@@ -94,6 +96,7 @@ int	ft_sleep(t_philo_info *info)
 		//	return (1);
 		slept_time += 1;
 	}
-	ft_print_message(info, "is thinking");
+	if (ft_print_message(info, "is thinking"))
+		return (1);
 	return (0);
 }

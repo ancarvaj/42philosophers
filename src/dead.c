@@ -31,6 +31,22 @@ void	ft_set_dead(t_philo_info *info)
 	pthread_mutex_unlock(&info->control->dead);
 }
 
+/*
+ if (ft_check_dead(info))
+		return (1);
+	pthread_mutex_lock(&info->control->dead);
+	pthread_mutex_lock(&info->control->current_time);
+	if (*(info->dead))
+	{
+		pthread_mutex_unlock(&info->control->current_time);
+		pthread_mutex_unlock(&info->control->dead);
+		return (1);
+	}
+	printf("%ld %ld %s\n", *(info->time.current_time), info->philo_id, message);
+	pthread_mutex_unlock(&info->control->current_time);
+	pthread_mutex_unlock(&info->control->dead);
+
+*/
 
 int	ft_check_dead(t_philo_info *info)
 {
@@ -41,12 +57,17 @@ int	ft_check_dead(t_philo_info *info)
 		> (time_t)info->rules.time_to_die)
 	{
 		pthread_mutex_unlock(&info->control->current_time);
-		ft_set_dead(info);
+		pthread_mutex_lock(&info->control->dead);
+		if (*(info->dead))
+		{
+			pthread_mutex_unlock(&info->control->dead);
+			return (1);
+		}
+		*(info->dead) = 1;
 		pthread_mutex_lock(&info->control->current_time);
 		printf("%ld %ld %s\n", *(info->time.current_time), info->philo_id, "died");
 		pthread_mutex_unlock(&info->control->current_time);
-
-		//ft_print_message(info, "died");
+		pthread_mutex_unlock(&info->control->dead);
 		return (1);
 	}
 	pthread_mutex_unlock(&info->control->current_time);

@@ -123,7 +123,7 @@ int				ft_wait_n_fork(t_philo_info *info);
 
 void			*ft_unlock_fork(t_philo_info *info);
 
-void			ft_print_message(t_philo_info *info, const char *message);
+int			ft_print_message(t_philo_info *info, const char *message);
 int				ft_set_check_time(t_time_info *info);
 
 #endif
