@@ -34,15 +34,19 @@ int	ft_eat(t_philo_info *info)
 	pthread_mutex_unlock(&info->control->current_time);
 	while (eat_time <= info->rules.time_to_eat)
 	{
-		usleep(1000 * 0.94);
+		usleep(5000);
 		if (ft_dead(info))
 			return (1);
-		eat_time = eat_time + 1;
+		eat_time = eat_time + 5;
 	}
+	printf("aaaaa\n");
 	ft_unlock_fork(info);
 	info->rules.n_times_must_eat = info->rules.n_times_must_eat - 1;
 	if (info->rules.n_times_must_eat == 0)
+	{
+		*(info->philo_have_eaten) = *(info->philo_have_eaten) - 1;
 		return (1);
+	}
 	return (0);
 }
 
@@ -56,12 +60,12 @@ int	ft_sleep(t_philo_info *info)
 	ft_print_message(info, "is sleeping");
 	while (slept_time <= info->rules.time_to_sleep)
 	{
-		usleep(1000 * 0.92);
+		usleep(5000);
 		if (ft_check_dead(info))
 			return (1);
-		slept_time = slept_time + 1;
+		slept_time = slept_time + 5;
 	}
-	if (ft_check_dead(info))
+	if (ft_dead(info))
 		return (1);
 	ft_print_message(info, "is thinking");
 	return (0);

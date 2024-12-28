@@ -84,7 +84,7 @@ int	ft_check_ready_time(t_time_info *info)
 int	ft_have_eaten_time(t_time_info *info)
 {
 	pthread_mutex_lock(&info->control->have_eaten);
-	if (!*(info->philo_have_eaten))
+	if (*(info->philo_have_eaten) == 0)
 	{
 		pthread_mutex_unlock(&info->control->have_eaten);
 		return (1);

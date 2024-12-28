@@ -42,7 +42,7 @@ void	ft_ready(t_philo_info *info)
 int	ft_have_eaten(t_philo_info *info)
 {
 	pthread_mutex_lock(&info->control->have_eaten);
-	if (!*(info->philo_have_eaten))
+	if (*(info->philo_have_eaten) == 0)
 	{
 		pthread_mutex_unlock(&info->control->have_eaten);
 		return (1);
@@ -70,9 +70,11 @@ void	*ft_philo_routine(void	*p)
 		if (ft_eat(info))
 			return (ft_unlock_fork(info));
 		if (ft_have_eaten(info))
-			return (NULL);
+		{
+			return (ft_unlock_fork(info));
+		}
 		if (ft_sleep(info))
-			return (NULL);
+			return (ft_unlock_fork(info));
 	}
 	return (NULL);
 }
