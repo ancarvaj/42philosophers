@@ -42,7 +42,11 @@ int	ft_check_dead(t_philo_info *info)
 	{
 		pthread_mutex_unlock(&info->control->current_time);
 		ft_set_dead(info);
-		ft_print_message(info, "died");
+		pthread_mutex_lock(&info->control->current_time);
+		printf("%ld %ld %s\n", *(info->time.current_time), info->philo_id, "died");
+		pthread_mutex_unlock(&info->control->current_time);
+
+		//ft_print_message(info, "died");
 		return (1);
 	}
 	pthread_mutex_unlock(&info->control->current_time);

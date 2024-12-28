@@ -47,8 +47,6 @@ int	ft_wait_fork(t_philo_info *info)
 	pthread_mutex_lock(&info->fork);
 	info->fork_took = 1;
 	pthread_mutex_unlock(&info->fork);
-	if (ft_dead(info))
-		return (1);
 	ft_print_message(info, "has taken a fork");
 	return (0);
 }
@@ -64,8 +62,6 @@ int	ft_wait_n_fork(t_philo_info *info)
 	pthread_mutex_lock(info->n_fork);
 	*(info->n_fork_took) = 1;
 	pthread_mutex_unlock(info->n_fork);
-	if (ft_dead(info))
-		return (1);
 	ft_print_message(info, "has taken a fork");
 	return (0);
 }

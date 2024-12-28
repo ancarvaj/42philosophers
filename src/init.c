@@ -120,7 +120,7 @@ void	*time_routine(void *p)
 	while (!ft_dead_time(info) && !ft_have_eaten_time(info))
 	{
 		ft_set_check_time(info);
-		usleep(500);
+		usleep(25);
 	}
 	return (NULL);
 }

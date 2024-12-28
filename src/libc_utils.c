@@ -30,6 +30,8 @@ void	ft_init_fork(int i, t_philo_info *info, size_t nb_of_philos)
 
 void	ft_print_message(t_philo_info *info, const char *message)
 {
+	if (ft_check_dead(info))
+		return ;
 	pthread_mutex_lock(&info->control->current_time);
 	printf("%ld %ld %s\n", *(info->time.current_time), info->philo_id, message);
 	pthread_mutex_unlock(&info->control->current_time);
