@@ -60,8 +60,8 @@ void	*ft_philo_routine(void	*p)
 	ft_ready(info);
 	while (ft_check_time_ready(info))
 		usleep(250);
-	if (!(info->philo_id % 2))
-		usleep(60000);
+	if (info->philo_id % 2)
+		usleep(50000);
 	info->time.last_meal = 0;
 	while (!ft_dead(info))
 	{

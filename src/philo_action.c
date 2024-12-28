@@ -21,25 +21,47 @@ int	ft_take_fork(t_philo_info *info)
 	return (0);
 }
 
+void	get_ms(time_t time_should_be,t_philo_info *info)
+{
+	time_t	current_time;
+
+	pthread_mutex_lock(&info->control->current_time);
+	current_time = *(info->time.current_time);
+	pthread_mutex_unlock(&info->control->current_time);
+	while (current_time < time_should_be)
+	{
+		//printf("c_t: %ld t_s_b: %ld\n", current_time, time_should_be);
+		usleep(50);
+		if (ft_dead(info))
+			return ;
+		pthread_mutex_lock(&info->control->current_time);
+		current_time = *(info->time.current_time);
+		pthread_mutex_unlock(&info->control->current_time);
+	}
+}
+
 int	ft_eat(t_philo_info *info)
 {
 	size_t	eat_time;
+	time_t	last_time;
 
 	if (ft_dead(info))
 		return (1);
 	ft_print_message(info, "is eating");
 	eat_time = 0;
 	pthread_mutex_lock(&info->control->current_time);
-	info->time.last_meal = *(info->time.current_time);
+	info->time.last_meal = *(info->time.current_time);//mutex
+	last_time = info->time.last_meal;
 	pthread_mutex_unlock(&info->control->current_time);
 	while (eat_time <= info->rules.time_to_eat)
 	{
-		usleep(5000);
+		last_time += 1;
+		get_ms(last_time ,info);
+		//usleep(1000);
 		if (ft_dead(info))
 			return (1);
-		eat_time = eat_time + 5;
+		eat_time += 1;
 	}
-	printf("aaaaa\n");
 	ft_unlock_fork(info);
 	info->rules.n_times_must_eat = info->rules.n_times_must_eat - 1;
 	if (info->rules.n_times_must_eat == 0)
@@ -53,17 +75,23 @@ int	ft_eat(t_philo_info *info)
 int	ft_sleep(t_philo_info *info)
 {
 	size_t	slept_time;
+	time_t	last_time;
 
 	if (ft_dead(info))
 		return (1);
-	slept_time = 0;
 	ft_print_message(info, "is sleeping");
+	slept_time = 0;
+	pthread_mutex_lock(&info->control->current_time);
+	last_time = *(info->time.current_time);
+	pthread_mutex_unlock(&info->control->current_time);
 	while (slept_time <= info->rules.time_to_sleep)
 	{
-		usleep(5000);
+		last_time += 1;
+		get_ms(last_time ,info);
+		//usleep(1000);
 		if (ft_check_dead(info))
 			return (1);
-		slept_time = slept_time + 5;
+		slept_time += 1;
 	}
 	if (ft_dead(info))
 		return (1);
