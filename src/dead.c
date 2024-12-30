@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:26:03 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/20 22:16:37 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:56:03 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@ void	ft_set_dead(t_philo_info *info)
 	pthread_mutex_unlock(&info->control->dead);
 }
 
-/*
- if (ft_check_dead(info))
-		return (1);
-	pthread_mutex_lock(&info->control->dead);
-	pthread_mutex_lock(&info->control->current_time);
-	if (*(info->dead))
-	{
-		pthread_mutex_unlock(&info->control->current_time);
-		pthread_mutex_unlock(&info->control->dead);
-		return (1);
-	}
-	printf("%ld %ld %s\n", *(info->time.current_time), info->philo_id, message);
-	pthread_mutex_unlock(&info->control->current_time);
-	pthread_mutex_unlock(&info->control->dead);
-
-*/
-
 int	ft_check_dead(t_philo_info *info)
 {
 	if (ft_dead(info))
@@ -65,7 +48,8 @@ int	ft_check_dead(t_philo_info *info)
 		}
 		*(info->dead) = 1;
 		pthread_mutex_lock(&info->control->current_time);
-		printf("%ld %ld %s\n", *(info->time.current_time), info->philo_id, "died");
+		printf("%ld %ld %s\n", *(info->time.current_time),
+			info->philo_id, "died");
 		pthread_mutex_unlock(&info->control->current_time);
 		pthread_mutex_unlock(&info->control->dead);
 		return (1);

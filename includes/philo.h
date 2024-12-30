@@ -6,7 +6,7 @@
 /*   By: ancarvaj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:43:25 by ancarvaj          #+#    #+#             */
-/*   Updated: 2024/12/20 21:14:57 by ancarvaj         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:55:24 by ancarvaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,10 @@ int				ft_wait_n_fork(t_philo_info *info);
 
 void			*ft_unlock_fork(t_philo_info *info);
 
-int			ft_print_message(t_philo_info *info, const char *message);
+int				ft_print_message(t_philo_info *info, const char *message);
 int				ft_set_check_time(t_time_info *info);
+
+void			*time_routine(void *p);
+void			ft_init_time_info(t_time_info *time, t_simulation *sim);
 
 #endif
